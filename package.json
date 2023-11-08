@@ -1,6 +1,6 @@
 {
   "name": "react-handled-forms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React package that provides form handling utilities for state management and validation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,6 +11,7 @@
   "keywords": [],
   "author": "TheMineWay",
   "license": "MIT",
+  "repository": "https://github.com/TheMineWay/react-handled-forms",
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.2",
     "@types/lodash": "^4.14.201",
