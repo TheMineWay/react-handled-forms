@@ -14,7 +14,9 @@ export function useForm<T extends FormValuesModel>(
 
   const { isLoading, startLoading, stopLoading } = useLoading();
 
-  const [formState, setFormState] = useState<Partial<T>>({});
+  const [formState, setFormState] = useState<Partial<T>>(
+    options?.defaultValues ?? {}
+  );
   const [validationErrors, setValidationErrors] = useState<Record<
     keyof T,
     string[]
@@ -35,9 +37,8 @@ export function useForm<T extends FormValuesModel>(
 
   const submit = async (submitOptions?: FormSubmitOptions<T>) => {
     startLoading();
+    const values = merge(formState, submitOptions?.replace);
     try {
-      const values = merge(formState, submitOptions?.replace);
-
       // Validate schema
       if (options?.objectSchema && !submitOptions?.disableValidation) {
         const errors = await validateValues(values, options.objectSchema);
@@ -50,6 +51,13 @@ export function useForm<T extends FormValuesModel>(
     } catch (e) {
       // Error
     } finally {
+      if (options?.onSubmit) {
+        try {
+          await options.onSubmit(values as T);
+        } catch (e) {
+          // Error in the external function
+        }
+      }
       stopLoading();
     }
   };
