@@ -6,12 +6,18 @@ export interface IUseForm<T extends FormValuesModel> {
   setFormState: (formState: Partial<T>) => void;
   isLoading: boolean;
 
-  validationErrors: Record<keyof T, string[]> | null;
+  validationErrors: Record<
+    keyof T,
+    { key: string; values?: Record<string, string | number> }[]
+  > | null;
 
   setValue: <K extends keyof T>(name: K, value?: T[K]) => void;
   getValue: <K extends keyof T>(name: keyof T) => T[K];
   clear: () => void;
 
   submit: (options?: FormSubmitOptions<T>) => Promise<void>;
-  validate: () => Promise<Record<keyof T, string[]> | null>;
+  validate: () => Promise<Record<
+    keyof T,
+    { key: string; values?: Record<string, string | number> }[]
+  > | null>;
 }
