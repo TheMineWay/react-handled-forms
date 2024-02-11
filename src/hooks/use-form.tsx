@@ -19,7 +19,7 @@ export function useForm<T extends FormValuesModel>(
   );
   const [validationErrors, setValidationErrors] = useState<Record<
     keyof T,
-    string[]
+    { key: string; values?: Record<string, string | number> }[]
   > | null>(null);
 
   const setValue = <K extends keyof T>(name: K, value?: T[K]) => {
@@ -74,8 +74,16 @@ export function useForm<T extends FormValuesModel>(
       setValidationErrors(null);
     } catch (validationError) {
       // Error during form submit
-      const errors: Record<string, string[]> = {};
-      (validationError as ValidationError).inner.forEach((error) => {
+      const errors: Record<
+        string,
+        { key: string; values?: Record<string, string | number> }[]
+      > = {};
+
+      (validationError as ValidationError).inner.forEach((_error) => {
+        const error = _error as unknown as Omit<ValidationError, "message"> & {
+          message: { key: string; values?: Record<string, string | number> };
+        };
+
         // Use the field name as the key
         const key = error.path;
         // Add the error message to the array of errors for that field
@@ -89,10 +97,18 @@ export function useForm<T extends FormValuesModel>(
       });
 
       // Update errors state
-      setValidationErrors(errors as Record<keyof T, string[]>);
+      setValidationErrors(
+        errors as Record<
+          keyof T,
+          { key: string; values?: Record<string, string | number> }[]
+        >
+      );
 
       // Return errors
-      return errors as Record<keyof T, string[]>;
+      return errors as Record<
+        keyof T,
+        { key: string; values?: Record<string, string | number> }[]
+      >;
     }
     return null;
   };
