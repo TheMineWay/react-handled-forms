@@ -9,4 +9,5 @@ export interface FormItemOptions<
   name: K;
   defaultValue?: V;
   componentProps?: P;
+  label?: string;
 }

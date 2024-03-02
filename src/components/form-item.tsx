@@ -11,6 +11,21 @@ export default function FormItem<
   K extends keyof T,
   P = unknown,
   V = unknown
->({ children }: Props<T, K, P, V>) {
-  return <>{children}</>;
+>({ children, label }: Props<T, K, P, V>) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1em",
+      }}
+    >
+      {label && (
+        <div>
+          <p>{label}</p>
+        </div>
+      )}
+      <div>{children}</div>
+    </div>
+  );
 }
