@@ -1,3 +1,4 @@
+import { useFormLayout } from "../hooks";
 import { FormItemOptions } from "../types/components/form-item/form-item-options.interface";
 import { FormValuesModel } from "../types/models/form-values-model.type";
 import React from "react";
@@ -12,20 +13,6 @@ export default function FormItem<
   P = unknown,
   V = unknown
 >({ children, label }: Props<T, K, P, V>) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1em",
-      }}
-    >
-      {label && (
-        <div>
-          <p>{label}</p>
-        </div>
-      )}
-      <div>{children}</div>
-    </div>
-  );
+  const { FormItem } = useFormLayout();
+  return <FormItem label={label}>{children}</FormItem>;
 }

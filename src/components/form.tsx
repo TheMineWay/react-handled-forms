@@ -1,3 +1,4 @@
+import { useFormLayout } from "../hooks";
 import FormProvider from "../providers/form.provider";
 import { IUseForm } from "../types/hooks/use-form/use-form.interface";
 import { FormValuesModel } from "../types/models/form-values-model.type";
@@ -12,5 +13,10 @@ export default function Form<T extends FormValuesModel>({
   form,
   children,
 }: Props<T>) {
-  return <FormProvider<T> form={form}>{children ?? <></>}</FormProvider>;
+  const { Form: FormLayout } = useFormLayout();
+  return (
+    <FormProvider<T> form={form}>
+      <FormLayout>{children ?? <></>}</FormLayout>
+    </FormProvider>
+  );
 }
