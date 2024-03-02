@@ -56,6 +56,7 @@ export function useForm<T extends FormValuesModel>(
           await options.onSubmit(values as T);
         } catch (e) {
           // Error in the external function
+          if (options.onSubmitError) await options.onSubmitError(e);
         }
       }
       stopLoading();
