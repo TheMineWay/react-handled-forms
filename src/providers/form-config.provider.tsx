@@ -16,8 +16,11 @@ const FormConfigContext = createContext<{
   setOptions: (options?: Options) => void;
 }>(null!);
 
-export default function FormConfigProvider({ children }: Props) {
-  const [options, setOptions] = useState<Options>();
+export default function FormConfigProvider({
+  children,
+  options: propsOpts,
+}: Props) {
+  const [options, setOptions] = useState<Options | undefined>(propsOpts);
 
   return (
     <FormConfigContext.Provider value={{ options, setOptions }}>
