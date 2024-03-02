@@ -6,8 +6,6 @@ type MethodResult = void | undefined | never | unknown | any | null;
 export interface UseFormOptions<T extends FormValuesModel> {
   objectSchema?: ObjectSchema<T>;
   onSubmit?: (values: T) => MethodResult | Promise<MethodResult>;
-  onSubmitError?: <T = unknown>(
-    error: T
-  ) => MethodResult | Promise<MethodResult>;
+  onSubmitError?: <T = any>(error: T) => MethodResult | Promise<MethodResult>;
   defaultValues?: Partial<T>;
 }
