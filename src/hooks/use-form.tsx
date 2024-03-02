@@ -48,9 +48,7 @@ export function useForm<T extends FormValuesModel>(
           throw new Error("Validation exception");
         }
       } else setValidationErrors(null);
-    } catch (e) {
-      // Error
-    } finally {
+
       if (options?.onSubmit) {
         try {
           await options.onSubmit(values as T);
@@ -59,6 +57,9 @@ export function useForm<T extends FormValuesModel>(
           if (options.onSubmitError) await options.onSubmitError(e);
         }
       }
+    } catch (e) {
+      // Error
+    } finally {
       stopLoading();
     }
   };
