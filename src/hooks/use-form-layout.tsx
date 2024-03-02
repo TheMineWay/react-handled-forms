@@ -6,8 +6,8 @@ export const useFormLayout = () => {
   const { options } = useFormConfig();
 
   const layout: FormLayoutConfig = {
-    ...options?.layout,
     ...DEFAULT_LAYOUT_CONFIG,
+    ...options?.layout,
   };
 
   return layout;
