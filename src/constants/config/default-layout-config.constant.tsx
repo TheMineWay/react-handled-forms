@@ -2,21 +2,19 @@ import { FormLayoutConfig } from "../../types";
 import React from "react";
 
 export const DEFAULT_LAYOUT_CONFIG: FormLayoutConfig = {
-  FormItem: ({ FormItem, label }) => (
+  FormItem: ({ children, label }) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
       {label && (
         <div>
           <label>{label}</label>
         </div>
       )}
-      <div>
-        <FormItem />
-      </div>
+      <div>{children}</div>
     </div>
   ),
-  Form: ({ Content }) => (
+  Form: ({ children }) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
-      <Content />
+      {children}
     </div>
   ),
 };
