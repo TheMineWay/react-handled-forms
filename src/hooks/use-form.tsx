@@ -43,7 +43,7 @@ export function useForm<T extends FormValuesModel>(
     submitOptions?: FormSubmitOptions<T>
   ): Promise<{ status: "success" | "failed" }> => {
     startLoading();
-    let status: { status: "success" | "failed" };
+    let status: { status: "success" | "failed" } = { status: "failed" };
     const values = processObjectReplacements(
       merge(formState, submitOptions?.replace),
       options?.overrideGlobalOptions ?? globalOptions?.options
@@ -62,14 +62,14 @@ export function useForm<T extends FormValuesModel>(
       if (options?.onSubmit) {
         try {
           await options.onSubmit(values as T);
+          status = { status: "success" };
         } catch (e) {
+          status = { status: "failed" };
           // Error in the external function
           if (options.onSubmitError) await options.onSubmitError(e);
         }
       }
-      status = { status: "success" };
     } catch (e) {
-      status = { status: "failed" };
       // Error
     } finally {
       stopLoading();
