@@ -1,9 +1,11 @@
 import { createContext, useContext, useState } from "react";
 import React from "react";
 import { FormLayoutConfig } from "../types";
+import { FormOptions } from "../types/providers/config/form-options.type";
 
 export interface Options {
   layout?: Partial<FormLayoutConfig>;
+  options?: FormOptions;
 }
 
 type Props = {

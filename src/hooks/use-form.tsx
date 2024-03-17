@@ -6,10 +6,14 @@ import { FormSubmitOptions } from "../types/hooks/use-form/form-submit-options.t
 import { merge } from "lodash";
 import { UseFormOptions } from "../types/hooks/use-form/use-form-options.type";
 import { ObjectSchema, ValidationError } from "yup";
+import { processObjectReplacements } from "../utils/internal/replacements/process-object-replacements.util";
+import { useFormConfig } from "../providers/form-config.provider";
 
 export function useForm<T extends FormValuesModel>(
   options?: UseFormOptions<T>
 ): IUseForm<T> {
+  const { options: globalOptions } = useFormConfig();
+
   const [, startTransition] = useTransition();
 
   const { isLoading, startLoading, stopLoading } = useLoading();
@@ -37,7 +41,10 @@ export function useForm<T extends FormValuesModel>(
 
   const submit = async (submitOptions?: FormSubmitOptions<T>) => {
     startLoading();
-    const values = merge(formState, submitOptions?.replace);
+    const values = processObjectReplacements(
+      merge(formState, submitOptions?.replace),
+      options?.overrideGlobalOptions ?? globalOptions?.options
+    );
     try {
       // Validate schema
       if (options?.objectSchema && !submitOptions?.disableValidation) {
