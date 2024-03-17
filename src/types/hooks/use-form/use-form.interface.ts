@@ -15,7 +15,9 @@ export interface IUseForm<T extends FormValuesModel> {
   getValue: <K extends keyof T>(name: keyof T) => T[K];
   clear: () => void;
 
-  submit: (options?: FormSubmitOptions<T>) => Promise<void>;
+  submit: (
+    options?: FormSubmitOptions<T>
+  ) => Promise<{ status: "success" | "failed" }>;
   validate: () => Promise<Record<
     keyof T,
     { key: string; values?: Record<string, string | number> }[]

@@ -39,8 +39,11 @@ export function useForm<T extends FormValuesModel>(
     });
   };
 
-  const submit = async (submitOptions?: FormSubmitOptions<T>) => {
+  const submit = async (
+    submitOptions?: FormSubmitOptions<T>
+  ): Promise<{ status: "success" | "failed" }> => {
     startLoading();
+    let status: { status: "success" | "failed" };
     const values = processObjectReplacements(
       merge(formState, submitOptions?.replace),
       options?.overrideGlobalOptions ?? globalOptions?.options
@@ -64,11 +67,14 @@ export function useForm<T extends FormValuesModel>(
           if (options.onSubmitError) await options.onSubmitError(e);
         }
       }
+      status = { status: "success" };
     } catch (e) {
+      status = { status: "failed" };
       // Error
     } finally {
       stopLoading();
     }
+    return status;
   };
 
   const validateValues = async (
