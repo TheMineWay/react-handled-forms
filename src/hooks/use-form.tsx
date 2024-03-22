@@ -5,7 +5,7 @@ import { useLoading } from "./internal/use-loading";
 import { FormSubmitOptions } from "../types/hooks/use-form/form-submit-options.type";
 import { merge } from "lodash";
 import { UseFormOptions } from "../types/hooks/use-form/use-form-options.type";
-import { ObjectSchema, ValidationError } from "yup";
+import { Schema, ValidationError } from "yup";
 import { processObjectReplacements } from "../utils/internal/replacements/process-object-replacements.util";
 import { useFormConfig } from "../providers/form-config.provider";
 
@@ -50,8 +50,8 @@ export function useForm<T extends FormValuesModel>(
     );
     try {
       // Validate schema
-      if (options?.objectSchema && !submitOptions?.disableValidation) {
-        const errors = await validateValues(values, options.objectSchema);
+      if (options?.schema && !submitOptions?.disableValidation) {
+        const errors = await validateValues(values, options.schema);
 
         if (errors) {
           // Validation errors occurred
@@ -77,12 +77,9 @@ export function useForm<T extends FormValuesModel>(
     return status;
   };
 
-  const validateValues = async (
-    values: Partial<T>,
-    objectSchema: ObjectSchema<T>
-  ) => {
+  const validateValues = async (values: Partial<T>, schema: Schema<T>) => {
     try {
-      await objectSchema.validate(values, {
+      await schema.validate(values, {
         strict: true,
         abortEarly: false,
       });
@@ -129,8 +126,8 @@ export function useForm<T extends FormValuesModel>(
   };
 
   const validate = async () => {
-    if (!options?.objectSchema) return null;
-    return await validateValues(formState, options.objectSchema);
+    if (!options?.schema) return null;
+    return await validateValues(formState, options.schema);
   };
 
   return {
