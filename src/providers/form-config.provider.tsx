@@ -5,7 +5,7 @@ import { FormOptions } from "../types/providers/config/form-options.type";
 
 export interface Options {
   layout?: Partial<FormLayoutConfig>;
-  options?: FormOptions<object>;
+  options?: FormOptions;
 }
 
 type Props = {

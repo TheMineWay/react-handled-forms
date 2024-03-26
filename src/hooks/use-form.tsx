@@ -53,8 +53,7 @@ export function useForm<T extends FormValuesModel>(
     let status: { status: "success" | "failed" } = { status: "failed" };
     const values = processObjectReplacements(
       merge(formState, submitOptions?.replace),
-      options?.overrideGlobalOptions ?? globalOptions?.options,
-      { schema: options?.objectSchema as unknown as ObjectSchema<Partial<T>> }
+      options?.overrideGlobalOptions ?? globalOptions?.options
     );
     try {
       // Validate schema
