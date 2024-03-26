@@ -39,6 +39,13 @@ export function useForm<T extends FormValuesModel>(
     });
   };
 
+  const reset = () => {
+    startTransition(() => {
+      setFormState(options?.defaultValues ?? {});
+      setValidationErrors(null);
+    });
+  };
+
   const submit = async (
     submitOptions?: FormSubmitOptions<T>
   ): Promise<{ status: "success" | "failed" }> => {
@@ -140,6 +147,7 @@ export function useForm<T extends FormValuesModel>(
     setValue,
     getValue,
     clear,
+    reset,
     submit,
     validate,
     validationErrors,

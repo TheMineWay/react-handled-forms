@@ -14,6 +14,7 @@ export interface IUseForm<T extends FormValuesModel> {
   setValue: <K extends keyof T>(name: K, value?: T[K]) => void;
   getValue: <K extends keyof T>(name: keyof T) => T[K];
   clear: () => void;
+  reset: () => void;
 
   submit: (
     options?: FormSubmitOptions<T>
