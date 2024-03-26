@@ -51,10 +51,18 @@ export function useForm<T extends FormValuesModel>(
   ): Promise<{ status: "success" | "failed" }> => {
     startLoading();
     let status: { status: "success" | "failed" } = { status: "failed" };
-    const values = processObjectReplacements(
+    let values = processObjectReplacements(
       merge(formState, submitOptions?.replace),
       options?.overrideGlobalOptions ?? globalOptions?.options
     );
+
+    if (globalOptions?.options?.transform) {
+      values = globalOptions.options.transform({
+        values,
+        schema: options?.objectSchema as unknown as ObjectSchema<object>,
+      });
+    }
+
     try {
       // Validate schema
       if (options?.objectSchema && !submitOptions?.disableValidation) {
