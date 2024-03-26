@@ -9,5 +9,5 @@ export interface UseFormOptions<T extends FormValuesModel, E = any> {
   onSubmit?: (values: T) => MethodResult | Promise<MethodResult>;
   onSubmitError?: (error: E) => MethodResult | Promise<MethodResult>;
   defaultValues?: Partial<T>;
-  overrideGlobalOptions?: FormOptions<T>;
+  overrideGlobalOptions?: FormOptions;
 }
