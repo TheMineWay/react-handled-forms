@@ -56,14 +56,14 @@ export function useForm<T extends FormValuesModel>(
       options?.overrideGlobalOptions ?? globalOptions?.options
     );
 
-    if (globalOptions?.options?.transform) {
-      values = globalOptions.options.transform({
-        values,
-        schema: options?.objectSchema as unknown as ObjectSchema<object>,
-      });
-    }
-
     try {
+      if (globalOptions?.options?.transform) {
+        values = globalOptions.options.transform({
+          values,
+          schema: options?.objectSchema as unknown as ObjectSchema<object>,
+        });
+      }
+
       // Validate schema
       if (options?.objectSchema && !submitOptions?.disableValidation) {
         const errors = await validateValues(values, options.objectSchema);
