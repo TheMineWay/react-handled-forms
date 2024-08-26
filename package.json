@@ -22,7 +22,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@types/node": "^20.9.0",
+    "@types/node": "^22.5.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "lodash": "^4.17.21",
