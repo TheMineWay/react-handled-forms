@@ -1,6 +1,6 @@
 {
   "name": "react-handled-forms",
-  "version": "1.11.4",
+  "version": "1.11.5",
   "description": "React package that provides form handling utilities for state management and validation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
